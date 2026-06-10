@@ -8,7 +8,19 @@
   ],
   "routes": [
     {
-      "src": "/(.*)",
+      "src": "/auth/(.*)",
+      "dest": "server.js"
+    },
+    {
+      "src": "/alumni/(.*)",
+      "dest": "server.js"
+    },
+    {
+      "src": "/alumni",
+      "dest": "server.js"
+    },
+    {
+      "src": "/",
       "dest": "server.js"
     }
   ]
