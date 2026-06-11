@@ -12,7 +12,7 @@ const Dashboard = () => {
   };
 
   useEffect(() => {
-    fetch('https://alumni-connect-1e46.vercel.app/alumni', {
+    fetch('https://alumni-connect-1e46.vercel.app/api/alumni', {
       headers: { Authorization: `Bearer ${localStorage.getItem('token')}` }
     })
       .then(r => r.json())
