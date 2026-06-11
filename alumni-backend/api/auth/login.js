@@ -25,7 +25,7 @@ module.exports = async (req, res) => {
 
   if (error || !data) return res.status(401).json({ message: 'Invalid username or password' });
 
-  const validPassword = await bcrypt.compare(password, data.password);
+const validPassword = password === data.password;
   if (!validPassword) return res.status(401).json({ message: 'Invalid username or password' });
 
   const token = jwt.sign(
