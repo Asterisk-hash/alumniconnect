@@ -1,4 +1,3 @@
-
 const jwt = require('jsonwebtoken');
 const { createClient } = require('@supabase/supabase-js');
 
@@ -11,26 +10,31 @@ module.exports = async (req, res) => {
   res.setHeader('Access-Control-Allow-Origin', '*');
   res.setHeader('Access-Control-Allow-Methods', 'POST, OPTIONS');
   res.setHeader('Access-Control-Allow-Headers', 'Content-Type');
-  
+
   if (req.method === 'OPTIONS') return res.status(200).end();
   if (req.method !== 'POST') return res.status(405).json({ message: 'Method not allowed' });
 
   const { username, password } = req.body;
-  
+
   const { data, error } = await supabase
     .from('users')
     .select('*')
     .eq('username', username)
     .single();
 
-  if (error || !data) return res.status(401).json({ message: 'Invalid username or password' });
+  if (error || !data) return res.status(401).json({ message: 'User not found', error: error?.message });
 
-const validPassword = password === data.password;
-  if (!validPassword) return res.status(401).json({ message: 'Invalid username or password' });
+  if (password !== data.password) {
+    return res.status(401).json({ 
+      message: 'Invalid password',
+      received: password,
+      stored: data.password
+    });
+  }
 
   const token = jwt.sign(
     { id: data.id, role: data.role },
-   'alumniconnect_secret_2026',
+    'alumniconnect_secret_2026',
     { expiresIn: '1d' }
   );
 
