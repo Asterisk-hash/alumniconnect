@@ -16,7 +16,7 @@ function MyProfile() {
 
   useEffect(() => {
     // Find alumni record by name
-    fetch('http://localhost:3000/alumni', {
+    fetch('https://alumniconnect-pi.vercel.app/alumni', {
       headers: { Authorization: `Bearer ${token}` }
     })
       .then(r => r.json())
@@ -35,7 +35,7 @@ function MyProfile() {
   const handleSave = async () => {
     if (alumniId) {
       // Update existing record
-      const res = await fetch(`http://localhost:3000/alumni/${alumniId}`, {
+      const res = await fetch(`https://alumniconnect-pi.vercel.app/alumni/${alumniId}`, {
         method: 'PUT',
         headers: { 'Content-Type': 'application/json', Authorization: `Bearer ${token}` },
         body: JSON.stringify(form)
@@ -44,7 +44,7 @@ function MyProfile() {
       else setMessage('Error updating profile');
     } else {
       // Create new record
-      const res = await fetch('http://localhost:3000/alumni', {
+      const res = await fetch('https://alumniconnect-pi.vercel.app/alumni', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json', Authorization: `Bearer ${token}` },
         body: JSON.stringify(form)
